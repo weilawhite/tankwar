@@ -14,8 +14,6 @@ public class TankWar {
         frame2.setVisible(true);
         frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame2.pack();
-//123123123
-        //112221212121
         //附著在主視窗右側
     }
 }
