@@ -6,6 +6,16 @@ public class Tank {
     private int y;
     Direction direction;
 
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    int speed;
+
     public Tank(int x, int y, Direction direction) {
         this.x = x;
         this.y = y;
@@ -36,18 +46,43 @@ public class Tank {
         this.direction = direction;
     }
 
-    public Image getImage(){
-        if (direction==Direction.UP){
+    public void move() {
+        switch (direction) {
+            case UP:y-=speed;break;
+            case DOWN:y+=speed;break;
+            case LEFT:x-=speed;break;
+            case RIGHT:x+=speed;break;
+            case UP_LEFT:y-=speed;x-=speed;break;
+            case UP_RIGHT:y-=speed;x+=speed;break;
+            case DOWN_LEFT:y+=speed;x-=speed;break;
+            case DOWN_RIGHT:y+=speed;x+=speed;break;
+        }
+    }
+
+    public Image getImage() {
+        if (direction == Direction.UP) {
             return new ImageIcon("assets\\images\\itankU.png").getImage();
         }
-        if (direction==Direction.DOWN){
+        if (direction == Direction.DOWN) {
             return new ImageIcon("assets\\images\\itankD.png").getImage();
         }
-        if (direction==Direction.LEFT){
+        if (direction == Direction.LEFT) {
             return new ImageIcon("assets\\images\\itankL.png").getImage();
         }
-        if (direction==Direction.RIGHT){
+        if (direction == Direction.RIGHT) {
             return new ImageIcon("assets\\images\\itankR.png").getImage();
+        }
+        if (direction == Direction.UP_LEFT) {
+            return new ImageIcon("assets\\images\\itankLU.png").getImage();
+        }
+        if (direction == Direction.DOWN_LEFT) {
+            return new ImageIcon("assets\\images\\itankLD.png").getImage();
+        }
+        if (direction == Direction.UP_RIGHT) {
+            return new ImageIcon("assets\\images\\itankRU.png").getImage();
+        }
+        if (direction == Direction.DOWN_RIGHT) {
+            return new ImageIcon("assets\\images\\itankRD.png").getImage();
         }
         return null;
     }
