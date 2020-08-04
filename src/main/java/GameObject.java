@@ -1,8 +1,8 @@
 import java.awt.*;
 
 public abstract class GameObject {
-    private int x,y;
-    private Image image;
+    protected int x,y;
+    protected Image image;
 
     public GameObject(int x, int y, Image image) {
         this.x = x;
@@ -10,6 +10,5 @@ public abstract class GameObject {
         this.image = image;
     }
 
-    abstract void draw(Graphics g)
-    ;
+    public abstract void draw(Graphics g);
 }

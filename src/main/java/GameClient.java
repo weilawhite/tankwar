@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.sql.Array;
@@ -40,9 +41,10 @@ public class GameClient extends JComponent {
         }
         /*eTanks.add(new Tank(200,100,Direction.UP));
         eTanks.add(new Tank(300,100,Direction.UP));*/
-        walls.add(new Wall(250, 150, 15, true));
-        walls.add(new Wall(150, 200, 15, false));
-        walls.add(new Wall(800, 200, 15, false));
+        Image image = Tools.getImage("brick.png");
+        walls.add(new Wall(250, 150, 15, true, image));
+        walls.add(new Wall(150, 200, 15, false, image));
+        walls.add(new Wall(800, 200, 15, false, image));
 
     }
 
@@ -64,14 +66,8 @@ public class GameClient extends JComponent {
         //g.drawImage(pTank.getImage(), pTank.getX(), pTank.getY(), null);
         pTank.draw(g);
 
-        for (Tank tank : eTanks
-        ) {
-            tank.draw(g);
-        }
-        for (Wall wall : walls
-        ) {
-            wall.draw(g);
-        }
+        for (Tank tank : eTanks) {tank.draw(g);}
+        for (Wall wall : walls) {wall.draw(g);}
     }
 
     public void keyPressed(KeyEvent e) {
