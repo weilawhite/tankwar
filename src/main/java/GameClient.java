@@ -10,6 +10,7 @@ public class GameClient extends JComponent {
     private int SWidth;
     private Tank pTank;
     private List<Tank> eTanks = new ArrayList<>();
+    private List<Wall> walls = new ArrayList<>();
 
     public GameClient(int SWidth, int SHeight) {
         this.SHeight = SHeight;
@@ -32,14 +33,16 @@ public class GameClient extends JComponent {
         pTank = new Tank(500, 200, Direction.UP);
         pTank.setSpeed(10);
 
-        for(int i=0;i<4;i++){
-            for(int j=0;j<3;j++){
-                eTanks.add(new Tank(350+i*80,200+j*80,Direction.UP));
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 3; j++) {
+                eTanks.add(new Tank(350 + i * 80, 500 + j * 80, Direction.UP, true));
             }
         }
         /*eTanks.add(new Tank(200,100,Direction.UP));
         eTanks.add(new Tank(300,100,Direction.UP));*/
-
+        walls.add(new Wall(250, 150, 15, true));
+        walls.add(new Wall(150, 200, 15, false));
+        walls.add(new Wall(800, 200, 15, false));
 
     }
 
@@ -61,9 +64,13 @@ public class GameClient extends JComponent {
         //g.drawImage(pTank.getImage(), pTank.getX(), pTank.getY(), null);
         pTank.draw(g);
 
-        for (Tank tank:eTanks
-             ) {
+        for (Tank tank : eTanks
+        ) {
             tank.draw(g);
+        }
+        for (Wall wall : walls
+        ) {
+            wall.draw(g);
         }
     }
 
