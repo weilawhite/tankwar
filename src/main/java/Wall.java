@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.tools.Tool;
 import java.awt.*;
 
 public class Wall {
@@ -13,7 +14,8 @@ public class Wall {
         this.y = y;
         this.bricks = bricks;
         this.horizontal = horizontal;
-        image = new ImageIcon("assets\\images\\brick.png").getImage();
+        //image = new ImageIcon("assets\\images\\brick.png").getImage();
+         image=Tools.getImage("brick.png");
     }
 
     public void draw(Graphics g){
