@@ -17,9 +17,11 @@ public class Tank {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+        this.speed2=(int)(speed/Math.sqrt(2));
     }
 
     int speed;
+    int speed2;
 
     public Tank(int x, int y, Direction direction) {
         this.x = x;
@@ -66,20 +68,20 @@ public class Tank {
                 x += speed;
                 break;
             case UP_LEFT:
-                y -= speed;
-                x -= speed;
+                y -= speed2;
+                x -= speed2;
                 break;
             case UP_RIGHT:
-                y -= speed;
-                x += speed;
+                y -= speed2;
+                x += speed2;
                 break;
             case DOWN_LEFT:
-                y += speed;
-                x -= speed;
+                y += speed2;
+                x -= speed2;
                 break;
             case DOWN_RIGHT:
-                y += speed;
-                x += speed;
+                y += speed2;
+                x += speed2;
                 break;
         }
     }
