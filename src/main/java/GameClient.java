@@ -1,8 +1,6 @@
 import javax.swing.*;
-import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +10,7 @@ public class GameClient extends JComponent {
     private Tank pTank;
     private List<Tank> eTanks = new ArrayList<>();
     private List<Wall> walls = new ArrayList<>();
+    private List<GameObject> gameObjects = new ArrayList<>();
 
     public GameClient(int SWidth, int SHeight) {
         this.SHeight = SHeight;
@@ -31,20 +30,29 @@ public class GameClient extends JComponent {
     }
 
     private void init() {
-        pTank = new Tank(500, 200, Direction.UP);
-        pTank.setSpeed(10);
 
+        Image[] bricksImage = {Tools.getImage("brick.png")};
+        Image[] pTankImage = new Image[8];
+        Image[] eTankImage = new Image[8];
+        String[] sub = {"U.png", "D.png", "L.png", "R.png", "LU.png", "LD.png", "RU.png", "RD.png"};
+
+        for (int i = 0; i < 8; i++) {
+            pTankImage[i] = Tools.getImage("iTank" + sub[i]);
+            eTankImage[i] = Tools.getImage("eTank" + sub[i]);
+        }
+
+        pTank = new Tank(500, 200, Direction.UP, pTankImage);
+        pTank.setSpeed(10);
+        gameObjects.add(pTank);
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
-                eTanks.add(new Tank(350 + i * 80, 500 + j * 80, Direction.UP, true));
+                gameObjects.add(new Tank(350 + i * 80, 500 + j * 80, Direction.UP, true, eTankImage));
             }
         }
-        /*eTanks.add(new Tank(200,100,Direction.UP));
-        eTanks.add(new Tank(300,100,Direction.UP));*/
-        Image image = Tools.getImage("brick.png");
-        walls.add(new Wall(250, 150, 15, true, image));
-        walls.add(new Wall(150, 200, 15, false, image));
-        walls.add(new Wall(800, 200, 15, false, image));
+
+        gameObjects.add(new Wall(250, 150, 15, true, bricksImage));
+        gameObjects.add(new Wall(150, 200, 15, false, bricksImage));
+        gameObjects.add(new Wall(800, 200, 15, false, bricksImage));
 
     }
 
@@ -62,12 +70,11 @@ public class GameClient extends JComponent {
 
     @Override
     public void paintComponent(Graphics g) {
-        //g.drawImage(new ImageIcon("assets\\images\\itankD.png").getImage(), 400, 500, null);
-        //g.drawImage(pTank.getImage(), pTank.getX(), pTank.getY(), null);
-        pTank.draw(g);
 
-        for (Tank tank : eTanks) {tank.draw(g);}
-        for (Wall wall : walls) {wall.draw(g);}
+        for (GameObject gameobject : gameObjects) {
+            gameobject.draw(g);
+        }
+
     }
 
     public void keyPressed(KeyEvent e) {
@@ -75,24 +82,18 @@ public class GameClient extends JComponent {
 
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
-                //pTank.setDirection(Direction.UP);
                 dirs[0] = true;
                 break;
             case KeyEvent.VK_DOWN:
-                //pTank.setDirection(Direction.DOWN);
                 dirs[1] = true;
                 break;
             case KeyEvent.VK_LEFT:
-                //pTank.setDirection(Direction.LEFT);
                 dirs[2] = true;
                 break;
             case KeyEvent.VK_RIGHT:
-                //pTank.setDirection(Direction.RIGHT);
                 dirs[3] = true;
                 break;
         }
-        //  repaint();
-        //pTank.move();
     }
 
 
@@ -101,23 +102,18 @@ public class GameClient extends JComponent {
 
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
-                //pTank.setDirection(Direction.UP);
                 dirs[0] = false;
                 break;
             case KeyEvent.VK_DOWN:
-                //pTank.setDirection(Direction.DOWN);
                 dirs[1] = false;
                 break;
             case KeyEvent.VK_LEFT:
-                //pTank.setDirection(Direction.LEFT);
                 dirs[2] = false;
                 break;
             case KeyEvent.VK_RIGHT:
-                //pTank.setDirection(Direction.RIGHT);
                 dirs[3] = false;
                 break;
         }
-        //  repaint();
-        //pTank.move();
+
     }
 }

@@ -1,5 +1,3 @@
-import javax.swing.*;
-import javax.tools.Tool;
 import java.awt.*;
 
 public class Wall extends GameObject {
@@ -8,7 +6,7 @@ public class Wall extends GameObject {
     boolean horizontal;
 
 
-     Wall(int x, int y, int bricks, boolean horizontal,Image image) {
+     Wall(int x, int y, int bricks, boolean horizontal,Image[] image) {
         super(x,y,image);
         this.bricks = bricks;
         this.horizontal = horizontal;
@@ -17,11 +15,11 @@ public class Wall extends GameObject {
     public void draw(Graphics g){
          if(horizontal){
              for(int i=0;i<bricks;i++){
-                 g.drawImage(image,x+i*image.getWidth(null),y,null);
+                 g.drawImage(image[0],x+i*width,y,null);
              }
          }else{
              for(int i=0;i<bricks;i++){
-                 g.drawImage(image,x,y+i*image.getHeight(null),null);
+                 g.drawImage(image[0],x,y+i*height,null);
              }
          }
 
