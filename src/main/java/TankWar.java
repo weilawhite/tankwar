@@ -3,6 +3,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class TankWar {
+
+    public static GameClient gameClient;
+    public static Status status;
     public static void main(String[] args) {
 
         JFrame frame = new JFrame();
@@ -11,8 +14,8 @@ public class TankWar {
         //主視窗寬度 Msw 1024 主視窗高度 Msh 768
         int Msw = 1024;
         int Msh = 768;
-        final GameClient gameClient = new GameClient(Msw, Msh);
-        final Status status=new Status(150,150);
+        gameClient = new GameClient(Msw, Msh);
+        status=new Status(150,150);
 
         frame.add(gameClient);
         frame.setTitle("TankGame Trial");

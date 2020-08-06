@@ -17,18 +17,20 @@ public class Tank extends GameObject {
 
     public void setSpeed(int speed) {
         this.speed = speed;
-        this.speed2=(int)(speed/Math.sqrt(2));
+        this.speed2 = (int) (speed / Math.sqrt(2));
     }
 
     int speed;
     int speed2;
-    public Tank(int x, int y, Direction direction,Image[] image) {
-        this(x,y,direction,false,image);
+
+    public Tank(int x, int y, Direction direction, Image[] image) {
+        this(x, y, direction, false, image);
     }
-    public Tank(int x, int y, Direction direction,boolean enemy,Image[] image) {
-        super(x,y,image);
+
+    public Tank(int x, int y, Direction direction, boolean enemy, Image[] image) {
+        super(x, y, image);
         this.direction = direction;
-        this.enemy=enemy;
+        this.enemy = enemy;
     }
 
     public int getX() {
@@ -56,6 +58,8 @@ public class Tank extends GameObject {
     }
 
     public void move() {
+        oldX = x;
+        oldY = y;
         switch (direction) {
             case UP:
                 y -= speed;
@@ -86,39 +90,9 @@ public class Tank extends GameObject {
                 x += speed2;
                 break;
         }
-    }
-/*
-    public Image getImage() {
 
-        String name=enemy?"etank":"itank";
-
-        if (direction == Direction.UP) {
-            return new ImageIcon("assets\\images\\"+name+"U.png").getImage();
-        }
-        if (direction == Direction.DOWN) {
-            return new ImageIcon("assets\\images\\"+name+"D.png").getImage();
-        }
-        if (direction == Direction.LEFT) {
-            return new ImageIcon("assets\\images\\"+name+"L.png").getImage();
-        }
-        if (direction == Direction.RIGHT) {
-            return new ImageIcon("assets\\images\\"+name+"R.png").getImage();
-        }
-        if (direction == Direction.UP_LEFT) {
-            return new ImageIcon("assets\\images\\"+name+"LU.png").getImage();
-        }
-        if (direction == Direction.DOWN_LEFT) {
-            return new ImageIcon("assets\\images\\"+name+"LD.png").getImage();
-        }
-        if (direction == Direction.UP_RIGHT) {
-            return new ImageIcon("assets\\images\\"+name+"RU.png").getImage();
-        }
-        if (direction == Direction.DOWN_RIGHT) {
-            return new ImageIcon("assets\\images\\"+name+"RD.png").getImage();
-        }
-        return null;
     }
-*/
+
     public void determineDirection() {
         if (dirs[0] && !dirs[1] && !dirs[2] && !dirs[3]) {
             direction = Direction.UP;
@@ -144,8 +118,33 @@ public class Tank extends GameObject {
         if (!stop()) {
             determineDirection();
             move();
+            collision();
         }
         g.drawImage(image[direction.ordinal()], x, y, null);
+    }
+
+    public void collision() {
+        if (x < 0) {
+            x = 0;
+        } else if (x > TankWar.gameClient.getSWidth() - width) {
+            x = TankWar.gameClient.getSWidth() - width;
+        }
+
+        if (y < 0) {
+            y = 0;
+        } else if (y > TankWar.gameClient.getSHeight() - height) {
+            y = TankWar.gameClient.getSHeight() - height;
+        }
+
+        for (GameObject object : TankWar.gameClient.getGameObjects()) {
+            if (object != this) {
+                if (getRectangle().intersects(object.getRectangle())) {
+                    x = oldX;
+                    y = oldY;
+                    return;
+                }
+            }
+        }
     }
 
     private boolean stop() {

@@ -12,6 +12,10 @@ public class GameClient extends JComponent {
     private List<Wall> walls = new ArrayList<>();
     private List<GameObject> gameObjects = new ArrayList<>();
 
+    public List<GameObject> getGameObjects() {
+        return gameObjects;
+    }
+
     public GameClient(int SWidth, int SHeight) {
         this.SHeight = SHeight;
         this.SWidth = SWidth;
@@ -70,7 +74,8 @@ public class GameClient extends JComponent {
 
     @Override
     public void paintComponent(Graphics g) {
-
+        g.setColor(Color.gray);
+        g.fillRect(0, 0, getSWidth(), getSHeight());
         for (GameObject gameobject : gameObjects) {
             gameobject.draw(g);
         }

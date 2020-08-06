@@ -25,4 +25,10 @@ public class Wall extends GameObject {
 
 
     }
+
+    @Override
+    public Rectangle getRectangle(){
+         if(horizontal){return new Rectangle(x,y,bricks*width,height);}
+         else {return new Rectangle(x,y,width,bricks*height);}
+    }
 }
