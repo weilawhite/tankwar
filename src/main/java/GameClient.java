@@ -11,6 +11,8 @@ public class GameClient extends JComponent {
     private List<Tank> eTanks = new ArrayList<>();
     private List<Wall> walls = new ArrayList<>();
     private List<GameObject> gameObjects = new ArrayList<>();
+    public static Image[] bulletImage=new Image[8];
+    //private List
 
     public List<GameObject> getGameObjects() {
         return gameObjects;
@@ -43,6 +45,7 @@ public class GameClient extends JComponent {
         for (int i = 0; i < 8; i++) {
             pTankImage[i] = Tools.getImage("iTank" + sub[i]);
             eTankImage[i] = Tools.getImage("eTank" + sub[i]);
+            bulletImage[i]=Tools.getImage("missile"+sub[i]);
         }
 
         pTank = new Tank(500, 200, Direction.UP, pTankImage);
@@ -98,9 +101,18 @@ public class GameClient extends JComponent {
             case KeyEvent.VK_RIGHT:
                 dirs[3] = true;
                 break;
+            case KeyEvent.VK_CONTROL:
+                System.out.println("Fire!");
+                break;
+            case KeyEvent.VK_0:
+                System.out.println("0");
+                break;
         }
     }
 
+    public void addGameObject(GameObject object) {
+        gameObjects.add(object);
+    }
 
     public void keyReleased(KeyEvent e) {
         boolean[] dirs = pTank.getDirs();

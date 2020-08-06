@@ -114,6 +114,12 @@ public class Tank extends GameObject {
 
     }
 
+    public void fire() {
+        int fireX = (x + width) / 2-GameClient.bulletImage[0].getWidth(null)/2;
+        int fireY = (y + height) / 2-GameClient.bulletImage[0].getHeight(null)/2;
+        TankWar.gameClient.addGameObject(new Bullet(fireX,fireY,direction,enemy,GameClient.bulletImage));
+    }
+
     public void draw(Graphics g) {
         if (!stop()) {
             determineDirection();
