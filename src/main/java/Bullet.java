@@ -7,7 +7,6 @@ public class Bullet extends Tank {
     }*/
 
 
-
     public Bullet(int x, int y, Direction direction, boolean enemy, Image[] image) {
         super(x, y, direction, enemy, image);
         speed = 10;
@@ -43,8 +42,10 @@ public class Bullet extends Tank {
             if (getRectangle().intersects(object.getRectangle())) {
                 System.out.println("boom!");
                 alive = false;
-                if(object instanceof Tank){((Tank) object).alive=false;
-                    System.out.println("擊中敵人!");}
+                if (object instanceof Tank) {
+                    ((Tank) object).alive = false;
+                    System.out.println("擊中敵人!");
+                }
                 return;
             }
         }

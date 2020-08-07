@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Tank extends GameObject {
+public class Tank extends MoveObject {
 
     Direction direction;
     boolean[] dirs = {false, false, false, false};
@@ -61,7 +61,7 @@ public class Tank extends GameObject {
     public void move() {
         oldX = x;
         oldY = y;
-        speed2=(int) (speed / Math.sqrt(2));
+        speed2 = (int) (speed / Math.sqrt(2));
         switch (direction) {
             case UP:
                 y -= speed;
@@ -117,9 +117,29 @@ public class Tank extends GameObject {
     }
 
     public void fire() {
-        int fireX = x + width / 2-GameClient.bulletImage[0].getWidth(null)/2;
-        int fireY = y + height / 2-GameClient.bulletImage[0].getHeight(null)/2;
-        TankWar.gameClient.addGameObject(new Bullet(fireX,fireY,direction,enemy,GameClient.bulletImage));
+        int fireX = x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
+        int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
+        TankWar.gameClient.addGameObject(new Bullet(fireX, fireY, direction, enemy, GameClient.bulletImage));
+    }
+
+    public void eightDirectionFire() {
+        int fireX = x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
+        int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
+
+        for (Direction dir : Direction.values()
+        ) {
+            TankWar.gameClient.addGameObject(new Bullet(fireX, fireY, dir, enemy, GameClient.bulletImage));
+        }
+    }
+
+    public void fastFire(){
+        int fireX = x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
+        int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
+        Bullet ff=new Bullet(fireX, fireY, direction, enemy, GameClient.bulletImage);
+        ff.setSpeed(50);
+        TankWar.gameClient.addGameObject(ff);
+        //TankWar.gameClient.addGameObject(new Bullet(fireX, fireY, direction, enemy, GameClient.bulletImage));
+
     }
 
     public void draw(Graphics g) {

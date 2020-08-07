@@ -12,7 +12,7 @@ public class GameClient extends JComponent {
     private List<Tank> eTanks = new ArrayList<>();
     private List<Wall> walls = new ArrayList<>();
     private List<GameObject> gameObjects = new ArrayList<>();
-    public static Image[] bulletImage=new Image[8];
+    public static Image[] bulletImage = new Image[8];
     //private List
 
     public List<GameObject> getGameObjects() {
@@ -46,7 +46,7 @@ public class GameClient extends JComponent {
         for (int i = 0; i < 8; i++) {
             pTankImage[i] = Tools.getImage("iTank" + sub[i]);
             eTankImage[i] = Tools.getImage("eTank" + sub[i]);
-            bulletImage[i]=Tools.getImage("missile"+sub[i]);
+            bulletImage[i] = Tools.getImage("missile" + sub[i]);
         }
 
         pTank = new Tank(500, 200, Direction.UP, pTankImage);
@@ -76,6 +76,34 @@ public class GameClient extends JComponent {
         return SWidth;
     }
 
+
+    public void checkWin() {
+        boolean gameWin=true;
+        for (GameObject object : gameObjects) {
+            if (object instanceof Tank && object!=pTank&&!(object instanceof Bullet)) {
+                gameWin=false;
+                break;
+            }
+        }
+
+        Image[] eTankImage = new Image[8];
+        String[] sub = {"U.png", "D.png", "L.png", "R.png", "LU.png", "LD.png", "RU.png", "RD.png"};
+
+        for (int i = 0; i < 8; i++) {
+            eTankImage[i] = Tools.getImage("eTank" + sub[i]);
+        }
+
+        if(gameWin){
+            System.out.println("finish");
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 3; j++) {
+                    gameObjects.add(new Tank(350 + i * 80, 500 + j * 80, Direction.UP, true, eTankImage));
+                }
+            }
+        }
+
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         g.setColor(Color.gray);
@@ -83,17 +111,18 @@ public class GameClient extends JComponent {
         for (GameObject gameobject : gameObjects) {
             gameobject.draw(g);
         }
-Iterator<GameObject> iterator=gameObjects.iterator();
-        while (iterator.hasNext()){
-            if(!(iterator.next().alive)){
+        Iterator<GameObject> iterator = gameObjects.iterator();
+        while (iterator.hasNext()) {
+            if (!(iterator.next().alive)) {
                 iterator.remove();
             }
         }
+        checkWin();
     }
 
     public void keyPressed(KeyEvent e) {
         boolean[] dirs = pTank.getDirs();
-
+        checkWin();
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
                 dirs[0] = true;
@@ -111,8 +140,13 @@ Iterator<GameObject> iterator=gameObjects.iterator();
                 pTank.fire();
                 System.out.println("Fire!");
                 break;
-            case KeyEvent.VK_0:
-                System.out.println("0");
+            case KeyEvent.VK_Q:
+                pTank.eightDirectionFire();
+                System.out.println("8 Fire!");
+                break;
+            case KeyEvent.VK_W:
+                pTank.fastFire();
+                System.out.println("Fast Fire!");
                 break;
         }
     }
