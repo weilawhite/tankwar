@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class GameClient extends JComponent {
@@ -82,7 +83,12 @@ public class GameClient extends JComponent {
         for (GameObject gameobject : gameObjects) {
             gameobject.draw(g);
         }
-
+Iterator<GameObject> iterator=gameObjects.iterator();
+        while (iterator.hasNext()){
+            if(!(iterator.next().alive)){
+                iterator.remove();
+            }
+        }
     }
 
     public void keyPressed(KeyEvent e) {
@@ -102,6 +108,7 @@ public class GameClient extends JComponent {
                 dirs[3] = true;
                 break;
             case KeyEvent.VK_CONTROL:
+                pTank.fire();
                 System.out.println("Fire!");
                 break;
             case KeyEvent.VK_0:

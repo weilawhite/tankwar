@@ -1,12 +1,14 @@
 import java.awt.*;
 
 public abstract class GameObject {
+    public boolean alive;
     protected int x,y,oldX,oldY;
     protected Image[] image;
     protected int width;
     protected int height;
 
     public GameObject(int x, int y, Image[] image) {
+        alive=true;
         this.x = x;
         this.y = y;
         this.image = image;

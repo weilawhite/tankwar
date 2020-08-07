@@ -6,6 +6,7 @@ public class Tank extends GameObject {
     Direction direction;
     boolean[] dirs = {false, false, false, false};
     boolean enemy;
+    //boolean alive = false;
 
     public boolean[] getDirs() {
         return dirs;
@@ -60,6 +61,7 @@ public class Tank extends GameObject {
     public void move() {
         oldX = x;
         oldY = y;
+        speed2=(int) (speed / Math.sqrt(2));
         switch (direction) {
             case UP:
                 y -= speed;
@@ -115,8 +117,8 @@ public class Tank extends GameObject {
     }
 
     public void fire() {
-        int fireX = (x + width) / 2-GameClient.bulletImage[0].getWidth(null)/2;
-        int fireY = (y + height) / 2-GameClient.bulletImage[0].getHeight(null)/2;
+        int fireX = x + width / 2-GameClient.bulletImage[0].getWidth(null)/2;
+        int fireY = y + height / 2-GameClient.bulletImage[0].getHeight(null)/2;
         TankWar.gameClient.addGameObject(new Bullet(fireX,fireY,direction,enemy,GameClient.bulletImage));
     }
 
