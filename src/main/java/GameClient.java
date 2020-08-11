@@ -13,7 +13,8 @@ public class GameClient extends JComponent {
     private List<Wall> walls = new ArrayList<>();
     private List<GameObject> gameObjects = new ArrayList<>();
     public static Image[] bulletImage = new Image[8];
-    //private List
+    public static Image[] pTankImage = new Image[8];
+    public static Image[] eTankImage = new Image[8];
 
     public List<GameObject> getGameObjects() {
         return gameObjects;
@@ -39,8 +40,7 @@ public class GameClient extends JComponent {
     private void init() {
 
         Image[] bricksImage = {Tools.getImage("brick.png")};
-        Image[] pTankImage = new Image[8];
-        Image[] eTankImage = new Image[8];
+
         String[] sub = {"U.png", "D.png", "L.png", "R.png", "LU.png", "LD.png", "RU.png", "RD.png"};
 
         for (int i = 0; i < 8; i++) {
@@ -49,15 +49,11 @@ public class GameClient extends JComponent {
             bulletImage[i] = Tools.getImage("missile" + sub[i]);
         }
 
-        pTank = new Tank(500, 200, Direction.UP, pTankImage);
+        pTank = new Tank(0, 0, Direction.DOWN, pTankImage);
         pTank.setSpeed(10);
         gameObjects.add(pTank);
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 3; j++) {
-                gameObjects.add(new Tank(350 + i * 80, 500 + j * 80, Direction.UP, true, eTankImage));
-            }
-        }
 
+        gameReset();
         gameObjects.add(new Wall(250, 150, 15, true, bricksImage));
         gameObjects.add(new Wall(150, 200, 15, false, bricksImage));
         gameObjects.add(new Wall(800, 200, 15, false, bricksImage));
@@ -66,6 +62,7 @@ public class GameClient extends JComponent {
 
     GameClient() {
         this(800, 600);
+
     }
 
     public int getSHeight() {
@@ -76,30 +73,40 @@ public class GameClient extends JComponent {
         return SWidth;
     }
 
+    public void gameReset() {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 3; j++) {
+                gameObjects.add(new Tank(350 + i * 80, 500 + j * 80, Direction.UP, true, eTankImage));
+            }
+        }
+        pTank.setX(500);
+        pTank.setY(200);
+    }
 
     public void checkWin() {
-        boolean gameWin=true;
+        boolean gameWin = true;
         for (GameObject object : gameObjects) {
-            if (object instanceof Tank && object!=pTank&&!(object instanceof Bullet)) {
-                gameWin=false;
+            if (object instanceof Tank && object != pTank && !(object instanceof Bullet)) {
+                gameWin = false;
                 break;
             }
         }
-
+/*
         Image[] eTankImage = new Image[8];
         String[] sub = {"U.png", "D.png", "L.png", "R.png", "LU.png", "LD.png", "RU.png", "RD.png"};
 
         for (int i = 0; i < 8; i++) {
             eTankImage[i] = Tools.getImage("eTank" + sub[i]);
         }
-
-        if(gameWin){
-            System.out.println("finish");
+*/
+        if (gameWin) {
+            System.out.println("finish");/*
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 3; j++) {
                     gameObjects.add(new Tank(350 + i * 80, 500 + j * 80, Direction.UP, true, eTankImage));
                 }
-            }
+            }*/
+            gameReset();
         }
 
     }
