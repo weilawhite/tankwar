@@ -1,40 +1,37 @@
-import javax.swing.*;
 import java.awt.*;
 
 public class Tank extends MoveObject {
 
-    Direction direction;
+    //Direction direction;
     boolean[] dirs = {false, false, false, false};
-    boolean enemy;
-    //int fireX = x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
-    //int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
-    int speed;
-    int speed2;
+    //boolean enemy;
+    //int speed;
+    //int speed2;
 
     public boolean[] getDirs() {
         return dirs;
     }
 
-    public int getSpeed() {
+    /*public int getSpeed() {
         return speed;
-    }
+    }*/
 
-    public void setSpeed(int speed) {
+    /*public void setSpeed(int speed) {
         this.speed = speed;
         this.speed2 = (int) (speed / Math.sqrt(2));
-    }
+    }*/
 
     public Tank(int x, int y, Direction direction, Image[] image) {
         this(x, y, direction, false, image);
     }
 
     public Tank(int x, int y, Direction direction, boolean enemy, Image[] image) {
-        super(x, y, image);
+        super(x, y,direction,enemy, image);
         this.direction = direction;
         this.enemy = enemy;
     }
 
-    public int getX() {
+    /*public int getX() {
         return x;
     }
 
@@ -49,7 +46,9 @@ public class Tank extends MoveObject {
     public void setY(int y) {
         this.y = y;
     }
+*/
 
+    /*
     public Direction getDirection() {
         return direction;
     }
@@ -93,7 +92,7 @@ public class Tank extends MoveObject {
                 break;
         }
     }
-
+*/
     public void determineDirection() {
         if (dirs[0] && !dirs[1] && !dirs[2] && !dirs[3]) {
             direction = Direction.UP;
@@ -187,17 +186,6 @@ public class Tank extends MoveObject {
     }
 
     public void collision() {
-        /*if (x < 0) {
-            x = 0;
-        } else if (x > TankWar.gameClient.getSWidth() - width) {
-            x = TankWar.gameClient.getSWidth() - width;
-        }
-
-        if (y < 0) {
-            y = 0;
-        } else if (y > TankWar.gameClient.getSHeight() - height) {
-            y = TankWar.gameClient.getSHeight() - height;
-        }*/
         collisionBound();
         for (GameObject object : TankWar.gameClient.getGameObjects()) {
             if (object != this) {

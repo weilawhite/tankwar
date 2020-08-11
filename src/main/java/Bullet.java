@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.List;
 
-public class Bullet extends Tank {
+public class Bullet extends MoveObject {
     /*public Bullet(int x, int y, Direction direction, Image[] image) {
         super(x, y, direction, image);
     }*/
@@ -9,8 +9,8 @@ public class Bullet extends Tank {
 
     public Bullet(int x, int y, Direction direction, boolean enemy, Image[] image) {
         super(x, y, direction, enemy, image);
-        speed = 10;
-        alive = true;
+        //speed = 10;
+        //alive = true;
     }
 
     @Override
@@ -32,11 +32,12 @@ public class Bullet extends Tank {
         ) {
             //子彈碰子彈
             if (object == this) {
+                System.out.println("打到自己");
                 continue;
             }
             //自己的子彈?
             if (object instanceof Tank && ((Tank) object).enemy == enemy) {
-                //System.out.println("擊中友軍");
+                System.out.println("擊中友軍");
                 continue;
             }
             //碰撞
@@ -45,15 +46,12 @@ public class Bullet extends Tank {
                 alive = false;
                 if (object instanceof Tank) {
                     ((Tank) object).alive = false;
-                    System.out.println("擊中敵人!");
+                   System.out.println("擊中敵人!");
                 }
                 return;
             }
         }
 
     }
-/*
-    private void collisionBound() {
 
-    }*/
 }

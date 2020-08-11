@@ -114,7 +114,7 @@ public class GameClient extends JComponent {
             }
         }
         checkWin();
-        System.out.println(gameObjects.size());
+        //System.out.println(gameObjects.size());
     }
 
     public void keyPressed(KeyEvent e) {
