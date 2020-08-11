@@ -16,7 +16,7 @@ public class GameClient extends JComponent {
     public static Image[] bricksImage = {Tools.getImage("brick.png")};
     public static Image[] pTankImage = new Image[8];
     public static Image[] eTankImage = new Image[8];
-    String[] sub = {"U.png", "D.png", "L.png", "R.png", "LU.png", "LD.png", "RU.png", "RD.png"};
+    String[] sub = {"U.png", "RU.png", "R.png", "RD.png", "D.png", "LD.png", "L.png", "LU.png"};
 
     public List<GameObject> getGameObjects() {
         return gameObjects;
@@ -114,6 +114,7 @@ public class GameClient extends JComponent {
             }
         }
         checkWin();
+        System.out.println(gameObjects.size());
     }
 
     public void keyPressed(KeyEvent e) {
@@ -143,6 +144,9 @@ public class GameClient extends JComponent {
             case KeyEvent.VK_W:
                 pTank.fastFire();
                 System.out.println("Fast Fire!");
+                break;
+            case KeyEvent.VK_E:
+                pTank.tripleFire();
                 break;
         }
     }

@@ -6,7 +6,10 @@ public class Tank extends MoveObject {
     Direction direction;
     boolean[] dirs = {false, false, false, false};
     boolean enemy;
-    //boolean alive = false;
+    //int fireX = x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
+    //int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
+    int speed;
+    int speed2;
 
     public boolean[] getDirs() {
         return dirs;
@@ -20,9 +23,6 @@ public class Tank extends MoveObject {
         this.speed = speed;
         this.speed2 = (int) (speed / Math.sqrt(2));
     }
-
-    int speed;
-    int speed2;
 
     public Tank(int x, int y, Direction direction, Image[] image) {
         this(x, y, direction, false, image);
@@ -92,7 +92,6 @@ public class Tank extends MoveObject {
                 x += speed2;
                 break;
         }
-
     }
 
     public void determineDirection() {
@@ -113,7 +112,6 @@ public class Tank extends MoveObject {
         } else if (dirs[0] && !dirs[1] && dirs[2] && !dirs[3]) {
             direction = Direction.UP_LEFT;
         }
-
     }
 
     public void fire() {
@@ -125,21 +123,38 @@ public class Tank extends MoveObject {
     public void eightDirectionFire() {
         int fireX = x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
         int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
-
         for (Direction dir : Direction.values()
         ) {
             TankWar.gameClient.addGameObject(new Bullet(fireX, fireY, dir, enemy, GameClient.bulletImage));
         }
     }
 
-    public void fastFire(){
+    public void tripleFire() {
+        System.out.println(direction.ordinal());
+        int tm = direction.ordinal();
+        int tl, tr;
+        tl = tm - 1;
+        tr = tm + 1;
+        if (tl == -1) tl = 7;
+        if (tr == 8) tr = 0;
+        Direction[] di = {Direction.UP, Direction.UP_RIGHT, Direction.RIGHT, Direction.DOWN_RIGHT, Direction.DOWN, Direction.DOWN_LEFT, Direction.LEFT, Direction.UP_LEFT};
         int fireX = x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
         int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
-        Bullet ff=new Bullet(fireX, fireY, direction, enemy, GameClient.bulletImage);
-        ff.setSpeed(50);
-        TankWar.gameClient.addGameObject(ff);
-        //TankWar.gameClient.addGameObject(new Bullet(fireX, fireY, direction, enemy, GameClient.bulletImage));
+        Bullet t1 = new Bullet(fireX, fireY, di[tl], enemy, GameClient.bulletImage);
+        Bullet t2 = new Bullet(fireX, fireY, di[tm], enemy, GameClient.bulletImage);
+        Bullet t3 = new Bullet(fireX, fireY, di[tr], enemy, GameClient.bulletImage);
 
+        TankWar.gameClient.addGameObject(t1);
+        TankWar.gameClient.addGameObject(t2);
+        TankWar.gameClient.addGameObject(t3);
+    }
+
+    public void fastFire() {
+        int fireX = x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
+        int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
+        Bullet ff = new Bullet(fireX, fireY, direction, enemy, GameClient.bulletImage);
+        ff.setSpeed(70);
+        TankWar.gameClient.addGameObject(ff);
     }
 
     public void draw(Graphics g) {
@@ -151,8 +166,28 @@ public class Tank extends MoveObject {
         g.drawImage(image[direction.ordinal()], x, y, null);
     }
 
-    public void collision() {
+    public boolean collisionBound() {
         if (x < 0) {
+            x = 0;
+            return true;
+        } else if (x > TankWar.gameClient.getSWidth() - width) {
+            x = TankWar.gameClient.getSWidth() - width;
+            return true;
+        }
+
+        if (y < 0) {
+            y = 0;
+            return true;
+
+        } else if (y > TankWar.gameClient.getSHeight() - height) {
+            y = TankWar.gameClient.getSHeight() - height;
+            return true;
+        }
+        return false;
+    }
+
+    public void collision() {
+        /*if (x < 0) {
             x = 0;
         } else if (x > TankWar.gameClient.getSWidth() - width) {
             x = TankWar.gameClient.getSWidth() - width;
@@ -162,8 +197,8 @@ public class Tank extends MoveObject {
             y = 0;
         } else if (y > TankWar.gameClient.getSHeight() - height) {
             y = TankWar.gameClient.getSHeight() - height;
-        }
-
+        }*/
+        collisionBound();
         for (GameObject object : TankWar.gameClient.getGameObjects()) {
             if (object != this) {
                 if (getRectangle().intersects(object.getRectangle())) {
@@ -183,5 +218,4 @@ public class Tank extends MoveObject {
         }
         return true;
     }
-
 }

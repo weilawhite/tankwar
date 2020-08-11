@@ -23,7 +23,8 @@ public class Bullet extends Tank {
 
     @Override
     public void collision() {
-        collisionBound();
+        boolean collisionBound=collisionBound();
+        if(collisionBound){alive=false;return;}
 
         List<GameObject> objects = TankWar.gameClient.getGameObjects();
 
@@ -51,18 +52,8 @@ public class Bullet extends Tank {
         }
 
     }
-
+/*
     private void collisionBound() {
-        if (x < 0) {
-            alive = false;
-        } else if (x > TankWar.gameClient.getSWidth() - width) {
-            alive = false;
-        }
 
-        if (y < 0) {
-            alive = false;
-        } else if (y > TankWar.gameClient.getSHeight() - height) {
-            alive = false;
-        }
-    }
+    }*/
 }
