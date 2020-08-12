@@ -82,6 +82,13 @@ public class Tank extends MoveObject {
         TankWar.gameClient.addGameObject(ff);
     }
 
+    public void frozenOrb(){
+        int fireX = x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
+        int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
+        TankWar.gameClient.addGameObject(new Orb(fireX, fireY, direction, enemy, GameClient.bulletImage));
+
+    }
+
     public void draw(Graphics g) {
         if (!stop()) {
             determineDirection();

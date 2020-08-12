@@ -89,8 +89,8 @@ public abstract class MoveObject extends GameObject {
 
     public void draw(Graphics g) {
 
-            move();
-            collision();
+        move();
+        collision();
 
         g.drawImage(image[direction.ordinal()], x, y, null);
     }

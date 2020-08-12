@@ -62,17 +62,29 @@ public class GameClient extends JComponent {
 
     //遊戲重置(包含起始) 設定敵人位置 移除所有子彈 設定玩家位置
     public void gameReset() {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 3; j++) {
-                gameObjects.add(new Tank(350 + i * 80, 500 + j * 80, Direction.UP, true, eTankImage));
+
+
+        Iterator<GameObject> iterator1 = gameObjects.iterator();
+        while (iterator1.hasNext()) {
+            if (iterator1.next() instanceof Orb) {
+                iterator1.remove();
             }
         }
+
         Iterator<GameObject> iterator = gameObjects.iterator();
         while (iterator.hasNext()) {
             if (iterator.next() instanceof Bullet) {
                 iterator.remove();
             }
         }
+
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 3; j++) {
+                gameObjects.add(new Tank(350 + i * 80, 500 + j * 80, Direction.UP, true, eTankImage));
+            }
+        }
+
         pTank.setX(500);
         pTank.setY(200);
         pTank.setDirection(Direction.DOWN);
@@ -96,9 +108,18 @@ public class GameClient extends JComponent {
                 gameWin = false;
                 break;
             }
+            if (object instanceof Orb) {
+                gameWin = false;
+                break;
+            }
+
         }
+
         if (gameWin) {
             System.out.println("finish");
+            System.out.println("請稍等重置......");
+
+
             gameReset();
         }
     }
@@ -152,6 +173,10 @@ public class GameClient extends JComponent {
             case KeyEvent.VK_E:
                 pTank.tripleFire();
                 System.out.println("3 Fire!");
+                break;
+            case KeyEvent.VK_R:
+                pTank.frozenOrb();
+                System.out.println("Orb");
                 break;
         }
     }
