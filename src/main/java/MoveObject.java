@@ -3,14 +3,9 @@ import java.awt.*;
 public abstract class MoveObject extends GameObject {
 
     Direction direction;
-    //boolean[] dirs = {false, false, false, false};
     boolean enemy;
     int speed;
     int speed2;
-
-    /*public boolean[] getDirs() {
-        return dirs;
-    }*/
 
     public int getSpeed() {
         return speed;
@@ -29,7 +24,7 @@ public abstract class MoveObject extends GameObject {
         super(x, y, image);
         this.direction = direction;
         this.enemy = enemy;
-        speed=30;
+        setSpeed(30);
     }
 
     public int getX() {
@@ -121,13 +116,4 @@ public abstract class MoveObject extends GameObject {
     }
 
     public abstract void collision();
-/*
-    private boolean stop() {
-        for (int i = 0; i < dirs.length; i++) {
-            if (dirs[i]) {
-                return false;
-            }
-        }
-        return true;
-    }*/
 }

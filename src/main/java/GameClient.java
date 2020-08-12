@@ -59,6 +59,8 @@ public class GameClient extends JComponent {
         this(800, 600);
     }
 
+
+    //遊戲重置(包含起始) 設定敵人位置 移除所有子彈 設定玩家位置
     public void gameReset() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
@@ -85,11 +87,12 @@ public class GameClient extends JComponent {
         return SWidth;
     }
 
-
+    //判斷條件:剩餘物件之中找到屬於Tank物件,但不是友方Tank,則認定沒有贏
+    //如果贏了則執行遊戲重置
     public void checkWin() {
         boolean gameWin = true;
         for (GameObject object : gameObjects) {
-            if (object instanceof Tank && object != pTank && !(object instanceof Bullet)) {
+            if (object instanceof Tank && object != pTank /*&& !(object instanceof Bullet)*/) {
                 gameWin = false;
                 break;
             }
@@ -117,6 +120,7 @@ public class GameClient extends JComponent {
         //System.out.println(gameObjects.size());
     }
 
+    //CTRL:一般射擊 Q:八向射擊 W:速射 E:三向射擊
     public void keyPressed(KeyEvent e) {
         boolean[] dirs = pTank.getDirs();
         checkWin();
@@ -147,13 +151,11 @@ public class GameClient extends JComponent {
                 break;
             case KeyEvent.VK_E:
                 pTank.tripleFire();
+                System.out.println("3 Fire!");
                 break;
         }
     }
 
-    public void addGameObject(GameObject object) {
-        gameObjects.add(object);
-    }
 
     public void keyReleased(KeyEvent e) {
         boolean[] dirs = pTank.getDirs();
@@ -173,5 +175,9 @@ public class GameClient extends JComponent {
                 break;
         }
 
+    }
+
+    public void addGameObject(GameObject object) {
+        gameObjects.add(object);
     }
 }

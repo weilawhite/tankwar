@@ -2,15 +2,8 @@ import java.awt.*;
 import java.util.List;
 
 public class Bullet extends MoveObject {
-    /*public Bullet(int x, int y, Direction direction, Image[] image) {
-        super(x, y, direction, image);
-    }*/
-
-
     public Bullet(int x, int y, Direction direction, boolean enemy, Image[] image) {
         super(x, y, direction, enemy, image);
-        //speed = 10;
-        //alive = true;
     }
 
     @Override
@@ -23,8 +16,11 @@ public class Bullet extends MoveObject {
 
     @Override
     public void collision() {
-        boolean collisionBound=collisionBound();
-        if(collisionBound){alive=false;return;}
+        boolean collisionBound = collisionBound();
+        if (collisionBound) {
+            alive = false;
+            return;
+        }
 
         List<GameObject> objects = TankWar.gameClient.getGameObjects();
 
@@ -32,21 +28,21 @@ public class Bullet extends MoveObject {
         ) {
             //子彈碰子彈
             if (object == this) {
-                System.out.println("打到自己");
+                //System.out.println("打到自己");
                 continue;
             }
             //自己的子彈?
             if (object instanceof Tank && ((Tank) object).enemy == enemy) {
-                System.out.println("擊中友軍");
+                //System.out.println("擊中友軍");
                 continue;
             }
             //碰撞
             if (getRectangle().intersects(object.getRectangle())) {
-                System.out.println("boom!");
+                //System.out.println("boom!");
                 alive = false;
                 if (object instanceof Tank) {
                     ((Tank) object).alive = false;
-                   System.out.println("擊中敵人!");
+                    //System.out.println("擊中敵人!");
                 }
                 return;
             }

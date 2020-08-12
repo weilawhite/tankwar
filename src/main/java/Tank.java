@@ -2,24 +2,13 @@ import java.awt.*;
 
 public class Tank extends MoveObject {
 
-    //Direction direction;
     boolean[] dirs = {false, false, false, false};
-    //boolean enemy;
-    //int speed;
-    //int speed2;
+    Direction[] di = {Direction.UP, Direction.UP_RIGHT, Direction.RIGHT, Direction.DOWN_RIGHT, Direction.DOWN, Direction.DOWN_LEFT, Direction.LEFT, Direction.UP_LEFT};
+
 
     public boolean[] getDirs() {
         return dirs;
     }
-
-    /*public int getSpeed() {
-        return speed;
-    }*/
-
-    /*public void setSpeed(int speed) {
-        this.speed = speed;
-        this.speed2 = (int) (speed / Math.sqrt(2));
-    }*/
 
     public Tank(int x, int y, Direction direction, Image[] image) {
         this(x, y, direction, false, image);
@@ -31,68 +20,6 @@ public class Tank extends MoveObject {
         this.enemy = enemy;
     }
 
-    /*public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-*/
-
-    /*
-    public Direction getDirection() {
-        return direction;
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
-
-    public void move() {
-        oldX = x;
-        oldY = y;
-        speed2 = (int) (speed / Math.sqrt(2));
-        switch (direction) {
-            case UP:
-                y -= speed;
-                break;
-            case DOWN:
-                y += speed;
-                break;
-            case LEFT:
-                x -= speed;
-                break;
-            case RIGHT:
-                x += speed;
-                break;
-            case UP_LEFT:
-                y -= speed2;
-                x -= speed2;
-                break;
-            case UP_RIGHT:
-                y -= speed2;
-                x += speed2;
-                break;
-            case DOWN_LEFT:
-                y += speed2;
-                x -= speed2;
-                break;
-            case DOWN_RIGHT:
-                y += speed2;
-                x += speed2;
-                break;
-        }
-    }
-*/
     public void determineDirection() {
         if (dirs[0] && !dirs[1] && !dirs[2] && !dirs[3]) {
             direction = Direction.UP;
@@ -129,14 +56,13 @@ public class Tank extends MoveObject {
     }
 
     public void tripleFire() {
-        System.out.println(direction.ordinal());
+        //System.out.println(direction.ordinal());
         int tm = direction.ordinal();
-        int tl, tr;
-        tl = tm - 1;
-        tr = tm + 1;
+        int tl = tm - 1;
+        int tr = tm + 1;
         if (tl == -1) tl = 7;
         if (tr == 8) tr = 0;
-        Direction[] di = {Direction.UP, Direction.UP_RIGHT, Direction.RIGHT, Direction.DOWN_RIGHT, Direction.DOWN, Direction.DOWN_LEFT, Direction.LEFT, Direction.UP_LEFT};
+
         int fireX = x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
         int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
         Bullet t1 = new Bullet(fireX, fireY, di[tl], enemy, GameClient.bulletImage);
