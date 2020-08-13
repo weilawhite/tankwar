@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameClient extends JComponent {
     private int SHeight;
@@ -11,12 +12,14 @@ public class GameClient extends JComponent {
     private Tank pTank;
     private List<Tank> eTanks = new ArrayList<>();
     private List<Wall> walls = new ArrayList<>();
-    private List<GameObject> gameObjects = new ArrayList<>();
+    private CopyOnWriteArrayList<GameObject> gameObjects = new CopyOnWriteArrayList<>();
     public static Image[] bulletImage = new Image[8];
     public static Image[] bricksImage = {Tools.getImage("brick.png")};
     public static Image[] pTankImage = new Image[8];
     public static Image[] eTankImage = new Image[8];
+    public static Image[] explosionImage = new Image[11];
     String[] sub = {"U.png", "RU.png", "R.png", "RD.png", "D.png", "LD.png", "L.png", "LU.png"};
+
 
     public List<GameObject> getGameObjects() {
         return gameObjects;
@@ -45,6 +48,9 @@ public class GameClient extends JComponent {
             eTankImage[i] = Tools.getImage("eTank" + sub[i]);
             bulletImage[i] = Tools.getImage("missile" + sub[i]);
         }
+        for (int i = 0; i < 11; i++) {
+            explosionImage[i] = Tools.getImage(i + ".png");
+        }
         pTank = new Tank(500, 200, Direction.DOWN, pTankImage);
         pTank.setSpeed(10);
         gameObjects.add(pTank);
@@ -63,7 +69,13 @@ public class GameClient extends JComponent {
     //遊戲重置(包含起始) 設定敵人位置 移除所有子彈 設定玩家位置
     public void gameReset() {
 
+        for (GameObject object : gameObjects) {
+            if (object instanceof Orb || object instanceof Bullet) {
+                gameObjects.remove(object);
+            }
+        }
 
+/*
         Iterator<GameObject> iterator1 = gameObjects.iterator();
         while (iterator1.hasNext()) {
             if (iterator1.next() instanceof Orb) {
@@ -78,15 +90,15 @@ public class GameClient extends JComponent {
             }
         }
 
-
+*/
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
-                gameObjects.add(new Tank(350 + i * 80, 500 + j * 80, Direction.UP, true, eTankImage));
+                gameObjects.add(new EnemyTank(350 + i * 80, 500 + j * 80, Direction.UP, true, eTankImage));
             }
         }
 
         pTank.setX(500);
-        pTank.setY(200);
+        pTank.setY(000);
         pTank.setDirection(Direction.DOWN);
 
     }
@@ -118,8 +130,6 @@ public class GameClient extends JComponent {
         if (gameWin) {
             System.out.println("finish");
             System.out.println("請稍等重置......");
-
-
             gameReset();
         }
     }
@@ -131,12 +141,21 @@ public class GameClient extends JComponent {
         for (GameObject gameobject : gameObjects) {
             gameobject.draw(g);
         }
+
+        for (GameObject object : gameObjects) {
+            if (!object.alive) {
+                gameObjects.remove(object);
+            }
+        }
+        /*
         Iterator<GameObject> iterator = gameObjects.iterator();
         while (iterator.hasNext()) {
             if (!(iterator.next().alive)) {
                 iterator.remove();
             }
         }
+        */
+
         checkWin();
         //System.out.println(gameObjects.size());
     }
@@ -163,7 +182,8 @@ public class GameClient extends JComponent {
                 System.out.println("Fire!");
                 break;
             case KeyEvent.VK_Q:
-                pTank.eightDirectionFire();
+                //pTank.eightDirectionFire();
+                pTank.superFire();
                 System.out.println("8 Fire!");
                 break;
             case KeyEvent.VK_W:

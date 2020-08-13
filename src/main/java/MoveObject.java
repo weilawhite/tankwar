@@ -115,5 +115,5 @@ public abstract class MoveObject extends GameObject {
         return false;
     }
 
-    public abstract void collision();
+    public abstract boolean collision();
 }

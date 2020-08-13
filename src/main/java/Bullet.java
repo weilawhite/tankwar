@@ -15,11 +15,11 @@ public class Bullet extends MoveObject {
     }
 
     @Override
-    public void collision() {
+    public boolean collision() {
         boolean collisionBound = collisionBound();
         if (collisionBound) {
             alive = false;
-            return;
+            return true;
         }
 
         List<GameObject> objects = TankWar.gameClient.getGameObjects();
@@ -27,7 +27,7 @@ public class Bullet extends MoveObject {
         for (GameObject object : objects
         ) {
             //子彈碰子彈
-            if (object == this) {
+            if (object instanceof Bullet || object instanceof Explosion) {
                 //System.out.println("打到自己");
                 continue;
             }
@@ -44,10 +44,12 @@ public class Bullet extends MoveObject {
                     ((Tank) object).alive = false;
                     //System.out.println("擊中敵人!");
                 }
-                return;
+                TankWar.gameClient.addGameObject(new Explosion(x,y,GameClient.explosionImage));
+                return true;
             }
         }
 
+        return false;
     }
 
 }

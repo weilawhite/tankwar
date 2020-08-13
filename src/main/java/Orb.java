@@ -10,16 +10,16 @@ public class Orb extends MoveObject {
 
         new Thread(() -> {
             int fireX, fireY;
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 collision();
-                if (!alive) {
-                    break;
-                }
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+                if (!alive) {break;}
+
                 fireX = this.x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
                 fireY = this.y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
                 for (Direction dir : Direction.values()
@@ -38,11 +38,11 @@ public class Orb extends MoveObject {
     }
 
     @Override
-    public void collision() {
+    public boolean collision() {
         boolean collisionBound = collisionBound();
         if (collisionBound) {
             alive = false;
-            return;
+            return true;
         }
         List<GameObject> objects = TankWar.gameClient.getGameObjects();
 
@@ -62,7 +62,7 @@ public class Orb extends MoveObject {
             if (getRectangle().intersects(object.getRectangle()) && object instanceof Wall) {
                 System.out.println("碰牆壁消失!");
                 alive = false;
-                return;
+                return true;
             }
             if (getRectangle().intersects(object.getRectangle()) && object instanceof Tank) {
                 System.out.println("Orb kill");
@@ -70,5 +70,6 @@ public class Orb extends MoveObject {
 
             }
         }
+        return false;
     }
 }

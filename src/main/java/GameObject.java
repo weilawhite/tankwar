@@ -6,7 +6,7 @@ public abstract class GameObject {
     protected Image[] image;
     protected int width;
     protected int height;
-
+    int frame;
     public GameObject(int x, int y, Image[] image) {
         alive=true;
         this.x = x;

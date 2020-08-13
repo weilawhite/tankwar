@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Tank extends MoveObject {
+public class Tank extends MoveObject implements SuperFire {
 
     boolean[] dirs = {false, false, false, false};
     Direction[] di = {Direction.UP, Direction.UP_RIGHT, Direction.RIGHT, Direction.DOWN_RIGHT, Direction.DOWN, Direction.DOWN_LEFT, Direction.LEFT, Direction.UP_LEFT};
@@ -118,17 +118,19 @@ public class Tank extends MoveObject {
         return false;
     }
 
-    public void collision() {
+    public boolean collision() {
         collisionBound();
         for (GameObject object : TankWar.gameClient.getGameObjects()) {
             if (object != this) {
                 if (getRectangle().intersects(object.getRectangle())) {
                     x = oldX;
                     y = oldY;
-                    return;
+
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     private boolean stop() {
@@ -138,5 +140,15 @@ public class Tank extends MoveObject {
             }
         }
         return true;
+    }
+
+    @Override
+    public void superFire() {
+        int fireX = x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
+        int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
+        for (Direction dir : Direction.values()
+        ) {
+            TankWar.gameClient.addGameObject(new Bullet(fireX, fireY, dir, enemy, GameClient.bulletImage));
+        }
     }
 }
