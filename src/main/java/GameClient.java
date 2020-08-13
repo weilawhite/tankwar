@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -19,7 +18,7 @@ public class GameClient extends JComponent {
     public static Image[] eTankImage = new Image[8];
     public static Image[] explosionImage = new Image[11];
     String[] sub = {"U.png", "RU.png", "R.png", "RD.png", "D.png", "LD.png", "L.png", "LU.png"};
-
+    boolean over = false;
 
     public List<GameObject> getGameObjects() {
         return gameObjects;
@@ -43,6 +42,8 @@ public class GameClient extends JComponent {
     }
 
     private void init() {
+        over = false;
+        gameObjects.clear();
         for (int i = 0; i < 8; i++) {
             pTankImage[i] = Tools.getImage("iTank" + sub[i]);
             eTankImage[i] = Tools.getImage("eTank" + sub[i]);
@@ -98,7 +99,7 @@ public class GameClient extends JComponent {
         }
 
         pTank.setX(500);
-        pTank.setY(000);
+        pTank.setY(0);
         pTank.setDirection(Direction.DOWN);
 
     }
@@ -124,7 +125,6 @@ public class GameClient extends JComponent {
                 gameWin = false;
                 break;
             }
-
         }
 
         if (gameWin) {
@@ -155,13 +155,26 @@ public class GameClient extends JComponent {
             }
         }
         */
+        checkStatus();
 
+        if(over){
+            g.setFont(new Font(null,Font.BOLD,100));
+            g.setColor(Color.RED);
+            g.drawString("HA NOOB !",150,300);
+        }
         checkWin();
         //System.out.println(gameObjects.size());
     }
 
+    private void checkStatus() {
+        if (pTank.alive == false) {
+            over = true;
+        }
+    }
+
     //CTRL:一般射擊 Q:八向射擊 W:速射 E:三向射擊
     public void keyPressed(KeyEvent e) {
+
         boolean[] dirs = pTank.getDirs();
         checkWin();
         switch (e.getKeyCode()) {
@@ -191,13 +204,22 @@ public class GameClient extends JComponent {
                 System.out.println("Fast Fire!");
                 break;
             case KeyEvent.VK_E:
-                pTank.tripleFire();
-                System.out.println("3 Fire!");
+                if (!over) {
+                    pTank.tripleFire();
+                    System.out.println("3 Fire!");
+                }
                 break;
             case KeyEvent.VK_R:
-                pTank.frozenOrb();
-                System.out.println("Orb");
+                if (!over) {
+                    pTank.frozenOrb();
+                    System.out.println("Orb");
+                }
                 break;
+            case KeyEvent.VK_F2:
+                if (over) {
+                    init();
+                    over = false;
+                }
         }
     }
 
