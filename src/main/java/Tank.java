@@ -99,23 +99,28 @@ public class Tank extends MoveObject implements SuperFire {
     }
 
     public boolean collisionBound() {
+
+        boolean C=false;
         if (x < 0) {
             x = 0;
-            return true;
+            C= true;
         } else if (x > TankWar.gameClient.getSWidth() - width) {
             x = TankWar.gameClient.getSWidth() - width;
-            return true;
+            C= true;
+            //return true;
         }
 
         if (y < 0) {
             y = 0;
-            return true;
+            C= true;
+            //return true;
 
         } else if (y > TankWar.gameClient.getSHeight() - height) {
             y = TankWar.gameClient.getSHeight() - height;
-            return true;
+            C= true;
+            //return true;
         }
-        return false;
+        return C;
     }
 
     public boolean collision() {
