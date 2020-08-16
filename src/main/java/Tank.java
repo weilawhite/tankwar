@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Random;
 
 public class Tank extends MoveObject implements SuperFire {
 
@@ -15,7 +16,7 @@ public class Tank extends MoveObject implements SuperFire {
     }
 
     public Tank(int x, int y, Direction direction, boolean enemy, Image[] image) {
-        super(x, y,direction,enemy, image);
+        super(x, y, direction, enemy, image);
         this.direction = direction;
         this.enemy = enemy;
     }
@@ -44,6 +45,10 @@ public class Tank extends MoveObject implements SuperFire {
         int fireX = x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
         int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
         TankWar.gameClient.addGameObject(new Bullet(fireX, fireY, direction, enemy, GameClient.bulletImage));
+
+        if(!enemy){
+            Tools.playAudio("shoot.wav");
+        }
     }
 
     public void eightDirectionFire() {
@@ -53,6 +58,8 @@ public class Tank extends MoveObject implements SuperFire {
         ) {
             TankWar.gameClient.addGameObject(new Bullet(fireX, fireY, dir, enemy, GameClient.bulletImage));
         }
+        String audioFile=new Random().nextBoolean()?"supershoot.wav":"supershoot.aiff";
+        Tools.playAudio(audioFile);
     }
 
     public void tripleFire() {
@@ -82,7 +89,7 @@ public class Tank extends MoveObject implements SuperFire {
         TankWar.gameClient.addGameObject(ff);
     }
 
-    public void frozenOrb(){
+    public void frozenOrb() {
         int fireX = x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
         int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
         TankWar.gameClient.addGameObject(new Orb(fireX, fireY, direction, enemy, GameClient.bulletImage));
@@ -100,25 +107,25 @@ public class Tank extends MoveObject implements SuperFire {
 
     public boolean collisionBound() {
 
-        boolean C=false;
+        boolean C = false;
         if (x < 0) {
             x = 0;
-            C= true;
+            C = true;
         } else if (x > TankWar.gameClient.getSWidth() - width) {
             x = TankWar.gameClient.getSWidth() - width;
-            C= true;
-            //return true;
+            C = true;
+
         }
 
         if (y < 0) {
             y = 0;
-            C= true;
-            //return true;
+            C = true;
+
 
         } else if (y > TankWar.gameClient.getSHeight() - height) {
             y = TankWar.gameClient.getSHeight() - height;
-            C= true;
-            //return true;
+            C = true;
+
         }
         return C;
     }
@@ -155,5 +162,7 @@ public class Tank extends MoveObject implements SuperFire {
         ) {
             TankWar.gameClient.addGameObject(new Bullet(fireX, fireY, dir, enemy, GameClient.bulletImage));
         }
+        String audioFile=new Random().nextBoolean()?"supershoot.wav":"supershoot.aiff";
+        Tools.playAudio(audioFile);
     }
 }

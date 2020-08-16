@@ -25,6 +25,7 @@ public class GameClient extends JComponent {
     }
 
     public GameClient(int SWidth, int SHeight) {
+        com.sun.javafx.application.PlatformImpl.startup(()->{});
         this.SHeight = SHeight;
         this.SWidth = SWidth;
         this.setPreferredSize(new Dimension(SWidth, SHeight));
@@ -52,7 +53,7 @@ public class GameClient extends JComponent {
         for (int i = 0; i < 11; i++) {
             explosionImage[i] = Tools.getImage(i + ".png");
         }
-        pTank = new Tank(500, 200, Direction.DOWN, pTankImage);
+        pTank = new Tank(500, 0, Direction.DOWN, pTankImage);
         pTank.setSpeed(10);
         gameObjects.add(pTank);
         gameReset();
@@ -69,39 +70,23 @@ public class GameClient extends JComponent {
 
     //遊戲重置(包含起始) 設定敵人位置 移除所有子彈 設定玩家位置
     public void gameReset() {
-
+/*
         for (GameObject object : gameObjects) {
             if (object instanceof Orb || object instanceof Bullet) {
                 gameObjects.remove(object);
             }
         }
-
-/*
-        Iterator<GameObject> iterator1 = gameObjects.iterator();
-        while (iterator1.hasNext()) {
-            if (iterator1.next() instanceof Orb) {
-                iterator1.remove();
-            }
-        }
-
-        Iterator<GameObject> iterator = gameObjects.iterator();
-        while (iterator.hasNext()) {
-            if (iterator.next() instanceof Bullet) {
-                iterator.remove();
-            }
-        }
-
 */
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
                 gameObjects.add(new EnemyTank(350 + i * 80, 500 + j * 80, Direction.UP, true, eTankImage));
             }
         }
-
+/*
         pTank.setX(500);
         pTank.setY(0);
         pTank.setDirection(Direction.DOWN);
-
+*/
     }
 
     public int getSHeight() {
@@ -130,7 +115,7 @@ public class GameClient extends JComponent {
         if (gameWin) {
             System.out.println("finish");
             System.out.println("請稍等重置......");
-            gameReset();
+            init();
         }
     }
 
@@ -195,7 +180,6 @@ public class GameClient extends JComponent {
                 System.out.println("Fire!");
                 break;
             case KeyEvent.VK_Q:
-                //pTank.eightDirectionFire();
                 pTank.superFire();
                 System.out.println("8 Fire!");
                 break;

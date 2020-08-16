@@ -18,7 +18,9 @@ public class Orb extends MoveObject {
                     e.printStackTrace();
                 }
 
-                if (!alive) {break;}
+                if (!alive) {
+                    break;
+                }
 
                 fireX = this.x + width / 2 - GameClient.bulletImage[0].getWidth(null) / 2;
                 fireY = this.y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
@@ -26,7 +28,6 @@ public class Orb extends MoveObject {
                 ) {
                     if (Math.abs(dir.ordinal() - direction.ordinal()) != 4) {
                         TankWar.gameClient.addGameObject(new Bullet(fireX, fireY, dir, enemy, GameClient.bulletImage));
-                        //System.out.println(dir.ordinal());
                     }
                 }
             }
@@ -60,12 +61,12 @@ public class Orb extends MoveObject {
 
             //碰撞牆壁
             if (getRectangle().intersects(object.getRectangle()) && object instanceof Wall) {
-                System.out.println("碰牆壁消失!");
+                //System.out.println("碰牆壁消失!");
                 alive = false;
                 return true;
             }
             if (getRectangle().intersects(object.getRectangle()) && object instanceof Tank) {
-                System.out.println("Orb kill");
+                //System.out.println("Orb kill");
                 object.alive = false;
 
             }

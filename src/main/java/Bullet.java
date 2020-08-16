@@ -43,9 +43,14 @@ public class Bullet extends MoveObject {
                 if (object instanceof Tank) {
                     ((Tank) object).alive = false;
                     //System.out.println("擊中敵人!");
+                    TankWar.gameClient.addGameObject(new Explosion(x,y,GameClient.explosionImage));
+                    return true;
                 }
-                TankWar.gameClient.addGameObject(new Explosion(x,y,GameClient.explosionImage));
-                return true;
+                else if (object instanceof Wall) {
+                    TankWar.gameClient.addGameObject(new Explosion(x,y,GameClient.explosionImage));
+                    return true;
+                    //System.out.println("擊中敵人!");
+                }
             }
         }
 
