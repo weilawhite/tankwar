@@ -121,7 +121,6 @@ public class Tank extends MoveObject implements SuperFire {
             y = 0;
             C = true;
 
-
         } else if (y > TankWar.gameClient.getSHeight() - height) {
             y = TankWar.gameClient.getSHeight() - height;
             C = true;

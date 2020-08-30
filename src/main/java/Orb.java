@@ -54,17 +54,19 @@ public class Orb extends MoveObject {
                 //System.out.println("打到自己");
                 continue;
             }
-            //不對所有坦克判斷
+            //不對我方坦克判斷
             if (object instanceof Tank && ((Tank) object).enemy == enemy) {
                 continue;
             }
 
-            //碰撞牆壁
+            //碰撞牆壁消失
             if (getRectangle().intersects(object.getRectangle()) && object instanceof Wall) {
                 //System.out.println("碰牆壁消失!");
                 alive = false;
                 return true;
             }
+
+            //碰到敵人不消失 移除敵人
             if (getRectangle().intersects(object.getRectangle()) && object instanceof Tank) {
                 //System.out.println("Orb kill");
                 object.alive = false;
