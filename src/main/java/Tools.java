@@ -1,9 +1,6 @@
-//import javax.print.attribute.standard.Media;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-//import javax.sound.*;
-//import javafx
 import javafx.scene.media.*;
 
 

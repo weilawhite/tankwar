@@ -46,7 +46,7 @@ public class Tank extends MoveObject implements SuperFire {
         int fireY = y + height / 2 - GameClient.bulletImage[0].getHeight(null) / 2;
         TankWar.gameClient.addGameObject(new Bullet(fireX, fireY, direction, enemy, GameClient.bulletImage));
 
-        if(!enemy){
+        if (!enemy) {
             Tools.playAudio("shoot.wav");
         }
     }
@@ -58,7 +58,7 @@ public class Tank extends MoveObject implements SuperFire {
         ) {
             TankWar.gameClient.addGameObject(new Bullet(fireX, fireY, dir, enemy, GameClient.bulletImage));
         }
-        String audioFile=new Random().nextBoolean()?"supershoot.wav":"supershoot.aiff";
+        String audioFile = new Random().nextBoolean() ? "supershoot.wav" : "supershoot.aiff";
         Tools.playAudio(audioFile);
     }
 
@@ -107,26 +107,28 @@ public class Tank extends MoveObject implements SuperFire {
 
     public boolean collisionBound() {
 
-        boolean C = false;
+        //上下與左右分開檢查 避免沒檢查完就return 造成坦克斜著卡出去
+        boolean collisionBound = false;
+        //先檢查有沒有碰撞到左右 碰到就拉回去
         if (x < 0) {
             x = 0;
-            C = true;
+            collisionBound = true;
         } else if (x > TankWar.gameClient.getSWidth() - width) {
             x = TankWar.gameClient.getSWidth() - width;
-            C = true;
+            collisionBound = true;
 
         }
-
+        //再檢查有沒有碰撞到上下 碰到就拉回去
         if (y < 0) {
             y = 0;
-            C = true;
+            collisionBound = true;
 
         } else if (y > TankWar.gameClient.getSHeight() - height) {
             y = TankWar.gameClient.getSHeight() - height;
-            C = true;
+            collisionBound = true;
 
         }
-        return C;
+        return collisionBound;
     }
 
     public boolean collision() {
@@ -161,7 +163,7 @@ public class Tank extends MoveObject implements SuperFire {
         ) {
             TankWar.gameClient.addGameObject(new Bullet(fireX, fireY, dir, enemy, GameClient.bulletImage));
         }
-        String audioFile=new Random().nextBoolean()?"supershoot.wav":"supershoot.aiff";
+        String audioFile = new Random().nextBoolean() ? "supershoot.wav" : "supershoot.aiff";
         Tools.playAudio(audioFile);
     }
 }

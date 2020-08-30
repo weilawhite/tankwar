@@ -176,16 +176,22 @@ public class GameClient extends JComponent {
                 dirs[3] = true;
                 break;
             case KeyEvent.VK_CONTROL:
-                pTank.fire();
-                System.out.println("Fire!");
+                if (!over) {
+                    pTank.fire();
+                    System.out.println("Fire!");
+                }
                 break;
             case KeyEvent.VK_Q:
-                pTank.superFire();
-                System.out.println("8 Fire!");
+                if (!over) {
+                    pTank.superFire();
+                    System.out.println("8 Fire!");
+                }
                 break;
             case KeyEvent.VK_W:
-                pTank.fastFire();
-                System.out.println("Fast Fire!");
+                if (!over) {
+                    pTank.fastFire();
+                    System.out.println("Fast Fire!");
+                }
                 break;
             case KeyEvent.VK_E:
                 if (!over) {
