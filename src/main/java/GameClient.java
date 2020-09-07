@@ -29,6 +29,7 @@ public class GameClient extends JComponent {
         this.SHeight = SHeight;
         this.SWidth = SWidth;
         this.setPreferredSize(new Dimension(SWidth, SHeight));
+        loadImages();
         init();
         new Thread(() -> {
             while (true) {
@@ -45,6 +46,20 @@ public class GameClient extends JComponent {
     private void init() {
         over = false;
         gameObjects.clear();
+
+        pTank = new Tank(500, 0, Direction.DOWN, pTankImage);
+        pTank.setSpeed(10);
+        gameObjects.add(pTank);
+        setEnemy();
+        setWalls();
+
+    }
+
+    GameClient() {
+        this(800, 600);
+    }
+
+    private void loadImages(){
         for (int i = 0; i < 8; i++) {
             pTankImage[i] = Tools.getImage("iTank" + sub[i]);
             eTankImage[i] = Tools.getImage("eTank" + sub[i]);
@@ -53,40 +68,22 @@ public class GameClient extends JComponent {
         for (int i = 0; i < 11; i++) {
             explosionImage[i] = Tools.getImage(i + ".png");
         }
-        pTank = new Tank(500, 0, Direction.DOWN, pTankImage);
-        pTank.setSpeed(10);
-        gameObjects.add(pTank);
-        gameReset();
+    }
+
+    private void setWalls(){
         gameObjects.add(new Wall(250, 150, 15, true, bricksImage));
         gameObjects.add(new Wall(150, 200, 15, false, bricksImage));
         gameObjects.add(new Wall(800, 200, 15, false, bricksImage));
-
     }
 
-    GameClient() {
-        this(800, 600);
-    }
+    //設定敵人位置
+    private void setEnemy() {
 
-
-    //遊戲重置(包含起始) 設定敵人位置 移除所有子彈 設定玩家位置
-    public void gameReset() {
-/*
-        for (GameObject object : gameObjects) {
-            if (object instanceof Orb || object instanceof Bullet) {
-                gameObjects.remove(object);
-            }
-        }
-*/
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
                 gameObjects.add(new EnemyTank(350 + i * 80, 500 + j * 80, Direction.UP, true, eTankImage));
             }
         }
-/*
-        pTank.setX(500);
-        pTank.setY(0);
-        pTank.setDirection(Direction.DOWN);
-*/
     }
 
     public int getSHeight() {
