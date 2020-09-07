@@ -69,7 +69,8 @@ public class Orb extends MoveObject {
             //碰到敵人不消失 移除敵人
             if (getRectangle().intersects(object.getRectangle()) && object instanceof Tank) {
                 //System.out.println("Orb kill");
-                object.alive = false;
+                ((Tank) object).hp--;
+                //object.alive = false;
 
             }
         }

@@ -5,20 +5,21 @@ public class Tank extends MoveObject implements SuperFire {
 
     boolean[] dirs = {false, false, false, false};
     Direction[] di = {Direction.UP, Direction.UP_RIGHT, Direction.RIGHT, Direction.DOWN_RIGHT, Direction.DOWN, Direction.DOWN_LEFT, Direction.LEFT, Direction.UP_LEFT};
-
+    int hp;
 
     public boolean[] getDirs() {
         return dirs;
     }
-
+/*
     public Tank(int x, int y, Direction direction, Image[] image) {
         this(x, y, direction, false, image);
     }
-
-    public Tank(int x, int y, Direction direction, boolean enemy, Image[] image) {
+*/
+    public Tank(int x, int y, Direction direction, boolean enemy, Image[] image,int hp) {
         super(x, y, direction, enemy, image);
         this.direction = direction;
         this.enemy = enemy;
+        this.hp=hp;
     }
 
     public void determineDirection() {
@@ -97,6 +98,7 @@ public class Tank extends MoveObject implements SuperFire {
     }
 
     public void draw(Graphics g) {
+        checkHp();
         if (!stop()) {
             determineDirection();
             move();
@@ -165,5 +167,11 @@ public class Tank extends MoveObject implements SuperFire {
         }
         String audioFile = new Random().nextBoolean() ? "supershoot.wav" : "supershoot.aiff";
         Tools.playAudio(audioFile);
+    }
+
+    public void checkHp(){
+        if(hp<=0){
+            alive=false;
+        }
     }
 }

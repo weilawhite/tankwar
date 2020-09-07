@@ -47,7 +47,7 @@ public class GameClient extends JComponent {
         over = false;
         gameObjects.clear();
 
-        pTank = new Tank(500, 0, Direction.DOWN, pTankImage);
+        pTank = new Tank(500, 0, Direction.DOWN,false, pTankImage,5);
         pTank.setSpeed(10);
         gameObjects.add(pTank);
         setEnemy();
@@ -81,7 +81,7 @@ public class GameClient extends JComponent {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
-                gameObjects.add(new EnemyTank(350 + i * 80, 500 + j * 80, Direction.UP, true, eTankImage));
+                gameObjects.add(new EnemyTank(350 + i * 80, 500 + j * 80, Direction.UP, true, eTankImage,3));
             }
         }
     }
@@ -143,6 +143,11 @@ public class GameClient extends JComponent {
             g.setFont(new Font(null,Font.BOLD,100));
             g.setColor(Color.RED);
             g.drawString("HA NOOB !",150,300);
+        }else{
+            g.setFont(new Font(null,Font.BOLD,50));
+            g.setColor(Color.RED);
+            g.drawString("HP:"+pTank.hp,50,50);
+
         }
         checkWin();
         //System.out.println(gameObjects.size());
